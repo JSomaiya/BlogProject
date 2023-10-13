@@ -1,6 +1,10 @@
 <?php
     require "config/database.php";
 
+    if (count($_COOKIE) > 0) {
+        header("Location:index.php");
+    }
+
     if (isset($_POST['btnRegister']))
     {
         $first_name = $_POST['txtFirstName'];

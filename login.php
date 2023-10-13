@@ -1,6 +1,10 @@
 <?php
     require "config/database.php";
 
+    if (count($_COOKIE) > 0) {
+        header("Location:index.php");
+    }
+
     if (isset($_POST['btnLogin'])) {
         $email = $_POST['txtEmail'];
         $pass = $_POST['txtPassword'];
@@ -13,8 +17,10 @@
             $passHash = $row["password_text"];
             
             if (password_verify($pass, $passHash)) {
-                $_SESSION["email"] = $email;
-                $_SESSION["is_logged_in"] = true;
+                
+                setcookie('email', $email, time() + (86400 * 30), "/"); // 86400 = 1 day
+
+                setcookie('is_logged_in', true, time() + (86400 * 30), "/"); // 86400 = 1 day
 
                 header("Location:index.php");
 
